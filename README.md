@@ -33,7 +33,7 @@ Assuming Minikube and `kubectl` are properly configured:
 kubectl apply -f k8s.yml
 ```
 
-## Running the App
+## Running
 
 Check that everything is running properly:
 
@@ -47,12 +47,20 @@ Get the IP of the service LoadBalancer (only applicable if you are using Minikub
 minikube service hello-ee-service
 ````
 
-## Scaling the App
+## Scaling
 
 Change the `k8s.yml` file according and run `kubectl apply` or run the following:
 
 ```sh
 kubectl scale --replicas=$NUM_REPLICAS deployment/hello-ee-deployment
+```
+
+## Upgrading
+
+Do the necessary changes to your code, build the docker image with the new version and run the following:
+
+```sh
+kubectl set image deployment hello-ee-deployment hello-ee=hello-ee-image:$NEW_VERSION
 ```
 
 
@@ -73,5 +81,5 @@ Kubernetes yml configurations. Contains the `deployment` and `service` definitio
 
 ## TODO
 
- - Integrate with a CI system so the container image gets built and deployed automatically to k8s
+ - Integrate with a CI system that looks for code changes. When these happen, the code should get tested and a container image should be built automatically with a new version. This image should be the shipped to the k8s deployment. 
 
