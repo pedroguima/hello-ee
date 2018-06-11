@@ -17,23 +17,45 @@ $ curl http://$LB_IP:$PORT/test
 Nothing's going on
 ```
 
+## Build and Deploy steps
 
-## Container build
+### Requirements
 
-Build your container image by running the following command:
+You'll need to install and configure the following packages before proceeding.
+
+ * [Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/)
+ * [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/)
+ * [Docker](https://docs.docker.com/)
+
+
+### Start Minikube
 
 ```sh
+minikube start
+```
+
+### Configure the environment to use Minikube's Docker
+
+```sh
+eval $(minikube docker-env)
+```
+
+### Build the container image
+
+```sh
+export VERSION=v1
 docker build . -t hello-ee-image:$VERSION
 ```
 
-## k8s deployment
+### Deploy to Kubernetes
 
-Assuming Minikube and `kubectl` are properly configured:
+Edit the Deployment docker image version in `k8s.yml` and run:
+
 ```sh
 kubectl apply -f k8s.yml
 ```
 
-## Running
+### Test 
 
 Check that everything is running properly:
 
@@ -47,17 +69,25 @@ Get the IP of the service LoadBalancer (only applicable if you are using Minikub
 minikube service hello-ee-service
 ````
 
-## Scaling
+Query the service
+
+```sh
+$ curl http://$LB_IP:$PORT/hostname
+```
+
+
+### Scaling
 
 Change the `k8s.yml` file according and run `kubectl apply` or run the following:
 
 ```sh
+export NUM_REPLICAS=5
 kubectl scale --replicas=$NUM_REPLICAS deployment/hello-ee-deployment
 ```
 
-## Upgrading
+### Upgrading
 
-Do the necessary changes to your code, build the docker image with the new version and run the following:
+Do the necessary changes to your code inside the `app` directory, build the docker image with the new version and run the following:
 
 ```sh
 kubectl set image deployment hello-ee-deployment hello-ee=hello-ee-image:$NEW_VERSION
