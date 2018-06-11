@@ -81,5 +81,5 @@ Kubernetes yml configurations. Contains the `deployment` and `service` definitio
 
 ## TODO
 
- - Integrate with a CI system that looks for code changes. When these happen, the code should get tested and a container image should be built automatically with a new version. This image should be the shipped to the k8s deployment. 
+ - Integrate with a CI system that looks for code changes. When these happen, the code should get tested and a container image should be built automatically with a new version. This image should then be shipped to the k8s deployment. 
 
