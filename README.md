@@ -52,7 +52,7 @@ minikube service hello-ee-service
 Change the `k8s.yml` file according and run `kubectl apply` or run the following:
 
 ```sh
-kubectl scale --replicas=10 deployment/hello-ee-deploymentkubectl scale --replicas=$NUM_REPLICAS deployment/hello-ee-deployment
+kubectl scale --replicas=$NUM_REPLICAS deployment/hello-ee-deployment
 ```
 
 
@@ -69,4 +69,9 @@ Contains the instructions that Docker will run when building the image.
 ### `k8s.yml`
 
 Kubernetes yml configurations. Contains the `deployment` and `service` definitions. 
+
+
+## TODO
+
+ - Integrate with a CI system so the container image gets built and deployed automatically to k8s
 
