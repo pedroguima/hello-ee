@@ -11,13 +11,13 @@ jobs:
           command: echo 'export VERSION=$(echo $CIRCLE_SHA1 | cut -c -7)' >> $BASH_ENV
       - run:  
           name: Build backend image
-          command: docker build -t $DOCKER_REPO/$DOCKER_USER/hello-ee:$VERSION --build-arg version=$VERSION . && docker tag $DOCKER_REPO/$DOCKER_USER/hello-ee:$VERSION $DOCKER_REPO/$DOCKER_USER/hello-ee:latest
+          command: docker build -t $DOCKER_USER/hello-ee:$VERSION --build-arg version=$VERSION . && docker tag $DOCKER_USER/hello-ee:$VERSION $DOCKER_USER/hello-ee:latest
       - run:
           name: Docker login
-          command: docker login -u $DOCKER_USER -p $DOCKER_PASS $DOCKER_REPO
+          command: docker login -u $DOCKER_USER -p $DOCKER_PASS 
       - run:
           name: Docker push hello-ee image
-          command: docker push $DOCKER_REPO/$DOCKER_USER/hello-ee
+          command: docker push $DOCKER_USER/hello-ee
 
 workflows:
   version: 2
