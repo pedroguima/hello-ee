@@ -23,9 +23,9 @@ class myHandler(BaseHTTPRequestHandler):
 
 try:
     server = HTTPServer(('', PORT_NUMBER), myHandler)
-    print 'Started httpserver on port', PORT_NUMBER
+    print('Started httpserver on port', PORT_NUMBER)
     server.serve_forever()
 
 except KeyboardInterrupt:
-    print 'Leaving...'
+    print('Leaving...')
     server.socket.close()
