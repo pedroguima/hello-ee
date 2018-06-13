@@ -7,6 +7,9 @@ jobs:
       - checkout
       - setup_remote_docker
       - run:
+          name: run tests
+          command: pip install flake8 && flake8 . 
+      - run:
           name: Set env variables
           command: echo 'export VERSION=$(echo $CIRCLE_SHA1 | cut -c -7)' >> $BASH_ENV
       - run:  
@@ -19,8 +22,20 @@ jobs:
           name: Docker push hello-ee image
           command: docker push $DOCKER_USER/hello-ee
 
+  deploy_to_dev:
+    - checkout
+    - setup_remote_docker
+    - run:
+        name: Set Env Variables here
+        command: echo "$VERSION and etc"
+    - run:
+        name : deploy to k8s
+        command: echo "kubectl set image deployment hello-ee-deployment hello-ee=docker.io/pedroguima/hello-ee:$VERSION"
+    
+
 workflows:
   version: 2
   build_and_deploy:
     jobs:
       - build
+      - deploy_to_dev
