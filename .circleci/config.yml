@@ -23,14 +23,17 @@ jobs:
           command: docker push $DOCKER_USER/hello-ee
 
   deploy_to_dev:
-    - checkout
-    - setup_remote_docker
-    - run:
-        name: Set Env Variables here
-        command: echo "$VERSION and etc"
-    - run:
-        name : deploy to k8s
-        command: echo "kubectl set image deployment hello-ee-deployment hello-ee=docker.io/pedroguima/hello-ee:$VERSION"
+    docker:
+      - image: circleci/python
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          name: Set Env Variables here
+          command: echo "$VERSION and etc"
+      - run:
+          name : deploy to k8s
+          command: echo "kubectl set image deployment hello-ee-deployment hello-ee=docker.io/pedroguima/hello-ee:$VERSION"
     
 
 workflows:
